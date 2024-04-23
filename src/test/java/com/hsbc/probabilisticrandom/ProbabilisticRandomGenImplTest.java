@@ -1,5 +1,7 @@
-package com.hsbc;
+package com.hsbc.probabilisticrandom;
 
+import com.hsbc.probabilisticrandom.ProbabilisticRandomGen;
+import com.hsbc.probabilisticrandom.ProbabilisticRandomGenImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,4 @@
-package com.hsbc;
-
-import lombok.Getter;
+package com.hsbc.probabilisticrandom;
 
 public record NumAndProbabilityAndAccumulation(NumAndProbability numAndProbability,
                                                float probabilityAccumulation) implements ProbabilisticRandomGen {
