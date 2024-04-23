@@ -1,4 +1,4 @@
-package com.hsbc;
+package com.hsbc.probabilisticrandom;
 
 import lombok.Getter;
 
