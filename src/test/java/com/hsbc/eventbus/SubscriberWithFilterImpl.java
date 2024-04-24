@@ -17,7 +17,7 @@ public class SubscriberWithFilterImpl implements SubscriberWithFilter {
 
     @Override
     public void update(Object o) {
-        System.out.println(String.format("Subscriber %s has received an event %s", name,o.getClass()));
+        System.out.println(String.format("Subscriber %s has received an event %s", name, o.getClass()));
         receivedObjects.add(o);
     }
 
