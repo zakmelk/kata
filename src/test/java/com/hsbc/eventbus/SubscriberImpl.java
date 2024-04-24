@@ -17,7 +17,7 @@ public class SubscriberImpl implements Subscriber {
 
     @Override
     public void update(Object o) {
-        System.out.println(String.format("Subscriber %s has received an event %s", this.name,o.getClass()));
+        System.out.println(String.format("Subscriber %s has received an event %s", this.name, o.getClass()));
         receivedObjects.add(o);
     }
 }

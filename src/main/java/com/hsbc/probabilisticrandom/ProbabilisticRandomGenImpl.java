@@ -18,8 +18,8 @@ public class ProbabilisticRandomGenImpl implements ProbabilisticRandomGen {
     @Override
     public int nextFromSample() {
         float randomValue = random.nextFloat();
-        for(NumAndProbabilityAndAccumulation distribute : distribution.getDistribution()){
-            if(randomValue<=distribute.probabilityAccumulation()){
+        for (NumAndProbabilityAndAccumulation distribute : distribution.getDistribution()) {
+            if (randomValue <= distribute.probabilityAccumulation()) {
                 return distribute.numAndProbability().number();
             }
         }

@@ -18,8 +18,8 @@ public class Distribution implements ProbabilisticRandomGen {
             for (int i = 1; i < pDistribution.size(); i++) {
                 distribution.add(new NumAndProbabilityAndAccumulation(pDistribution.get(i), pDistribution.get(i).probabilityOfSample() + distribution.get(i - 1).probabilityAccumulation()));
             }
-            distributionProbabilitySum = distribution.get(distribution.size()-1).probabilityAccumulation();
-        }else{
+            distributionProbabilitySum = distribution.get(distribution.size() - 1).probabilityAccumulation();
+        } else {
             throw new IllegalArgumentException("Distribution list should not be null or empty");
         }
 
