@@ -3,8 +3,13 @@ package com.hsbc.eventbus;
 import java.util.*;
 
 public class SingleThreadedEventBus implements EventBus{
-    private final Map<Class<?>, Set<Subscriber>> subscribersWithoutFilter = new HashMap<>();
-    private final Map<Class<?>, Set<SubscriberWithFilter>> subscribersWithFilter = new HashMap<>();
+    private final Map<Class<?>, Set<Subscriber>> subscribersWithoutFilter;
+    private final Map<Class<?>, Set<SubscriberWithFilter>> subscribersWithFilter;
+
+    public SingleThreadedEventBus(){
+        subscribersWithoutFilter = new HashMap<>();
+        subscribersWithFilter = new HashMap<>();
+    }
 
     @Override
     public void publishEvent(Object event) {

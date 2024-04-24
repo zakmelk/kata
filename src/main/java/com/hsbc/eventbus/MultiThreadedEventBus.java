@@ -5,8 +5,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 public class MultiThreadedEventBus implements EventBus{
-    private final Map<Class<?>, Set<Subscriber>> subscribersWithoutFilter = new ConcurrentHashMap<>();
-    private final Map<Class<?>, Set<SubscriberWithFilter>> subscribersWithFilter = new ConcurrentHashMap<>();
+    private final Map<Class<?>, Set<Subscriber>> subscribersWithoutFilter;
+    private final Map<Class<?>, Set<Subscriber>> subscribersWithFilter;
+    private final ConcurrentHashMap<Class<?>, Object> latestEvents;
+
+    public MultiThreadedEventBus() {
+        this.subscribersWithoutFilter = new ConcurrentHashMap<>();
+        this.subscribersWithFilter = new ConcurrentHashMap<>();
+        this.latestEvents = new ConcurrentHashMap<>();
+    }
 
     @Override
     public void publishEvent(Object event) {
@@ -16,18 +23,34 @@ public class MultiThreadedEventBus implements EventBus{
         }
     }
 
-    private void publishEventWithoutFilter(Object o) {
-        Set<Subscriber> subscribers = subscribersWithoutFilter.getOrDefault(o.getClass(), new CopyOnWriteArraySet<>());
+    private void publishEventWithoutFilter(Object event) {
+        Set<Subscriber> subscribers = subscribersWithoutFilter.getOrDefault(event.getClass(), new CopyOnWriteArraySet<>());
+        updateLastEvent(event, subscribers);
         for(Subscriber subscriber : subscribers){
-            subscriber.update(o);
+            updateSubscriber(event, subscriber);
+        }
+    }
+
+    private void updateSubscriber(Object event, Subscriber subscriber) {
+        if(subscriber instanceof LatestEventSubscriber){
+            ((LatestEventSubscriber) subscriber).onLatestEvent(latestEvents.get(event.getClass()));
+        }else{
+            subscriber.update(event);
+        }
+    }
+
+    private void updateLastEvent(Object o, Set<Subscriber> subscribers) {
+        if(subscribers.stream().anyMatch(s -> s instanceof LatestEventSubscriber)){
+            latestEvents.put(o.getClass(), o);
         }
     }
 
     private void publishEventWithFilter(Object event) {
-        Set<SubscriberWithFilter> subscribers = subscribersWithFilter.getOrDefault(event.getClass(), new CopyOnWriteArraySet<>());
-        for(SubscriberWithFilter subscriber : subscribers){
-            if(subscriber.isValid(event)){
-                subscriber.update(event);
+        Set<Subscriber> subscribers = subscribersWithFilter.getOrDefault(event.getClass(), new CopyOnWriteArraySet<>());
+        updateLastEvent(event, subscribers);
+        for(Subscriber subscriber : subscribers){
+            if(((SubscriberWithFilter)subscriber).isValid(event)){
+                updateSubscriber(event, subscriber);
             }
         }
     }
