@@ -1,5 +1,8 @@
-package com.hsbc.probabilisticrandom;
+package com.hsbc.adapter.probability;
 
+import com.hsbc.domain.model.probability.Distribution;
+import com.hsbc.domain.model.probability.NumAndProbabilityAndAccumulation;
+import com.hsbc.domain.port.probability.ProbabilisticRandomGen;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

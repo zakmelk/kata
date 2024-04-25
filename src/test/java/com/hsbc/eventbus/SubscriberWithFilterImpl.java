@@ -1,5 +1,6 @@
 package com.hsbc.eventbus;
 
+import com.hsbc.domain.model.event.SubscriberWithFilter;
 import lombok.Getter;
 
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
-package com.hsbc.probabilisticrandom;
+package com.hsbc.domain.model.probability;
 
+import com.hsbc.domain.port.probability.ProbabilisticRandomGen;
 import lombok.Getter;
 
 import java.util.ArrayList;
