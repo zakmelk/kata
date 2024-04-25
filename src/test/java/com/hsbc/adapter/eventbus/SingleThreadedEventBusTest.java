@@ -1,6 +1,5 @@
-package com.hsbc.eventbus;
+package com.hsbc.adapter.eventbus;
 
-import com.hsbc.adapter.eventbus.SingleThreadedEventBus;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
