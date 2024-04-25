@@ -1,5 +1,7 @@
-package com.hsbc.eventbus;
+package com.hsbc.domain.port.event;
 
+
+import com.hsbc.domain.model.event.Statistics;
 
 public interface Throttler {
     ThrottleResult shouldProceed(Statistics statistics);

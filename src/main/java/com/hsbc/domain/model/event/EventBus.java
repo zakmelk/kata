@@ -1,4 +1,4 @@
-package com.hsbc.eventbus;
+package com.hsbc.domain.model.event;
 
 public interface EventBus {
     void publishEvent(Object o);

@@ -1,5 +1,7 @@
-package com.hsbc.eventbus;
+package com.hsbc.adapter.statistic;
 
+
+import com.hsbc.domain.model.event.Statistics;
 
 import java.util.concurrent.BlockingQueue;
 

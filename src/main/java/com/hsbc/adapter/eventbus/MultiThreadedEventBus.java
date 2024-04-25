@@ -1,4 +1,9 @@
-package com.hsbc.eventbus;
+package com.hsbc.adapter.eventbus;
+
+import com.hsbc.domain.model.event.EventBus;
+import com.hsbc.domain.model.event.LatestEventSubscriber;
+import com.hsbc.domain.model.event.Subscriber;
+import com.hsbc.domain.model.event.SubscriberWithFilter;
 
 import java.util.HashSet;
 import java.util.Map;
