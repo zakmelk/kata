@@ -10,6 +10,10 @@ import java.util.function.Predicate;
 public class StatisticsThrottler extends MultiThreadedEventBus implements Throttler {
     private final Predicate<Statistics> predicate;
 
+    public StatisticsThrottler(){
+        predicate = statistics -> true;
+    }
+
     public StatisticsThrottler(Predicate<Statistics> predicate) {
         this.predicate = predicate;
     }
