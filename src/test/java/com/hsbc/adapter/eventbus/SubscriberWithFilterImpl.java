@@ -1,6 +1,5 @@
 package com.hsbc.adapter.eventbus;
 
-import com.hsbc.domain.model.event.Statistics;
 import com.hsbc.domain.model.event.SubscriberWithFilter;
 import lombok.Getter;
 

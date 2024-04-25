@@ -6,8 +6,6 @@ import com.hsbc.domain.model.event.Statistics;
 import com.hsbc.domain.model.event.SubscriberWithFilter;
 import com.hsbc.domain.port.event.SlidingWindowStatistics;
 
-import java.util.Collections;
-import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
