@@ -1,16 +1,16 @@
-package com.hsbc.probabilisticrandom;
+package com.hsbc.domain.model.probability;
 
-import com.hsbc.adapter.probability.ProbabilisticRandomGenImpl;
 import com.hsbc.domain.port.probability.ProbabilisticRandomGen;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-class ProbabilisticRandomGenImplTest {
-    private static ProbabilisticRandomGen probabilisticRandomGen;
+class DistributionTest {
+
+    private static Distribution distribution;
 
     @BeforeAll
     public static void setup() {
@@ -19,11 +19,21 @@ class ProbabilisticRandomGenImplTest {
         ProbabilisticRandomGen.NumAndProbability numAndProbability3 = new ProbabilisticRandomGen.NumAndProbability(3, 0.1f);
         ProbabilisticRandomGen.NumAndProbability numAndProbability4 = new ProbabilisticRandomGen.NumAndProbability(4, 0.2f);
         List<ProbabilisticRandomGen.NumAndProbability> pDistribution = List.of(numAndProbability1, numAndProbability2, numAndProbability3, numAndProbability4);
-        probabilisticRandomGen = new ProbabilisticRandomGenImpl(pDistribution);
+        distribution = new Distribution(pDistribution);
     }
 
     @Test
     void nextFromSample() {
-        assertTrue(probabilisticRandomGen.nextFromSample() > -1);
+        assertThrows(IllegalCallerException.class, () -> distribution.nextFromSample());
+    }
+
+    @Test
+    void getDistribution() {
+        assertNotNull(distribution.getDistribution());
+    }
+
+    @Test
+    void getDistributionProbabilitySum() {
+        assertEquals(0.8f, distribution.getDistributionProbabilitySum());
     }
 }

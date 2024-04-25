@@ -2,9 +2,9 @@ package com.hsbc.adapter.statistic;
 
 
 import com.hsbc.adapter.throttler.StatisticsThrottler;
-import com.hsbc.domain.port.event.SlidingWindowStatistics;
 import com.hsbc.domain.model.event.Statistics;
 import com.hsbc.domain.model.event.SubscriberWithFilter;
+import com.hsbc.domain.port.event.SlidingWindowStatistics;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
