@@ -1,5 +1,6 @@
 package com.hsbc.adapter.eventbus;
 
+import com.hsbc.adapter.statistic.StatisticsImpl;
 import com.hsbc.domain.model.event.Statistics;
 import com.hsbc.domain.model.event.SubscriberWithFilter;
 import lombok.Getter;
@@ -8,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class SubscriberWithFilterImpl implements SubscriberWithFilter {
+public class SubscriberForStatisticsImpl implements SubscriberWithFilter {
     private final String name;
     private final List<Object> receivedObjects;
 
-    public SubscriberWithFilterImpl(String name) {
+    public SubscriberForStatisticsImpl(String name) {
         this.name = name;
         receivedObjects = new ArrayList<>();
     }
@@ -25,6 +26,6 @@ public class SubscriberWithFilterImpl implements SubscriberWithFilter {
 
     @Override
     public boolean isValid(Object event) {
-        return event instanceof String;
+        return event instanceof Statistics;
     }
 }
