@@ -5,14 +5,12 @@ import com.hsbc.domain.model.event.LatestEventSubscriber;
 import com.hsbc.domain.model.event.Subscriber;
 import com.hsbc.domain.model.event.SubscriberWithFilter;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 public class MultiThreadedEventBus implements EventBus {
+
     private final Map<Class<?>, Set<Subscriber>> subscribersWithoutFilter;
     private final Map<Class<?>, Set<Subscriber>> subscribersWithFilter;
     private final ConcurrentHashMap<Class<?>, Object> latestEvents;
@@ -24,14 +22,14 @@ public class MultiThreadedEventBus implements EventBus {
     }
 
     @Override
-    public void publishEvent(Object event) {
+    public synchronized void publishEvent(Object event) {
         if (Objects.nonNull(event)) {
             publishEventWithoutFilter(event);
             publishEventWithFilter(event);
         }
     }
 
-    private void publishEventWithoutFilter(Object event) {
+    private synchronized void publishEventWithoutFilter(Object event) {
         Set<Subscriber> subscribers = subscribersWithoutFilter.getOrDefault(event.getClass(), new CopyOnWriteArraySet<>());
         updateLastEvent(event, subscribers);
         for (Subscriber subscriber : subscribers) {
@@ -39,7 +37,7 @@ public class MultiThreadedEventBus implements EventBus {
         }
     }
 
-    private void updateSubscriber(Object event, Subscriber subscriber) {
+    private synchronized void updateSubscriber(Object event, Subscriber subscriber) {
         if (subscriber instanceof LatestEventSubscriber) {
             ((LatestEventSubscriber) subscriber).onLatestEvent(latestEvents.get(event.getClass()));
         } else {
@@ -47,13 +45,13 @@ public class MultiThreadedEventBus implements EventBus {
         }
     }
 
-    private void updateLastEvent(Object o, Set<Subscriber> subscribers) {
+    private synchronized void updateLastEvent(Object o, Set<Subscriber> subscribers) {
         if (subscribers.stream().anyMatch(s -> s instanceof LatestEventSubscriber)) {
             latestEvents.put(o.getClass(), o);
         }
     }
 
-    private void publishEventWithFilter(Object event) {
+    private synchronized void publishEventWithFilter(Object event) {
         Set<Subscriber> subscribers = subscribersWithFilter.getOrDefault(event.getClass(), new CopyOnWriteArraySet<>());
         updateLastEvent(event, subscribers);
         for (Subscriber subscriber : subscribers) {
@@ -64,12 +62,22 @@ public class MultiThreadedEventBus implements EventBus {
     }
 
     @Override
-    public void addSubscriber(Class<?> eventType, Subscriber subscriber) {
+    public synchronized void addSubscriber(Class<?> eventType, Subscriber subscriber) {
         subscribersWithoutFilter.computeIfAbsent(eventType, key -> new HashSet<>()).add(subscriber);
     }
 
     @Override
-    public void addSubscriberForFilteredEvents(Class<?> eventType, SubscriberWithFilter subscriber) {
+    public synchronized void addSubscriberForFilteredEvents(Class<?> eventType, SubscriberWithFilter subscriber) {
         subscribersWithFilter.computeIfAbsent(eventType, key -> new HashSet<>()).add(subscriber);
     }
+
+    public Map<Class<?>, Set<Subscriber>> getSubscribersWithoutFilter() {
+        return Collections.unmodifiableMap(subscribersWithoutFilter);
+    }
+
+    public Map<Class<?>, Set<Subscriber>> getSubscribersWithFilter() {
+        return Collections.unmodifiableMap(subscribersWithFilter);
+    }
+
+
 }
