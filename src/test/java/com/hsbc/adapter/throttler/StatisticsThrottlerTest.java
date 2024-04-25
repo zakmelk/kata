@@ -28,7 +28,7 @@ class StatisticsThrottlerTest {
         // When
         Throttler.ThrottleResult result = statisticsThrottler.shouldProceed(statistics);
         // Then
-        assertEquals(Throttler.ThrottleResult.PROCEED,result);
+        assertEquals(Throttler.ThrottleResult.PROCEED, result);
     }
 
     @Test
@@ -43,7 +43,7 @@ class StatisticsThrottlerTest {
         // When
         Throttler.ThrottleResult result = statisticsThrottler.shouldProceed(statistics);
         // Then
-        assertEquals(Throttler.ThrottleResult.DO_NOT_PROCEED,result);
+        assertEquals(Throttler.ThrottleResult.DO_NOT_PROCEED, result);
     }
 
     @Test

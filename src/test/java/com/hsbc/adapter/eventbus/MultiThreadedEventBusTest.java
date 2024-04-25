@@ -32,8 +32,8 @@ class MultiThreadedEventBusTest {
         // when
         eventBus.addSubscriber(TestEvent.class, subscriber);
         // Then
-        assertEquals(1,eventBus.getSubscribersWithoutFilter().size());
-        assertEquals(0,eventBus.getSubscribersWithFilter().size());
+        assertEquals(1, eventBus.getSubscribersWithoutFilter().size());
+        assertEquals(0, eventBus.getSubscribersWithFilter().size());
     }
 
     @Test
@@ -43,8 +43,8 @@ class MultiThreadedEventBusTest {
         // When
         eventBus.addSubscriberForFilteredEvents(TestEvent.class, subscriber);
         // Then
-        assertEquals(0,eventBus.getSubscribersWithoutFilter().size());
-        assertEquals(1,eventBus.getSubscribersWithFilter().size());
+        assertEquals(0, eventBus.getSubscribersWithoutFilter().size());
+        assertEquals(1, eventBus.getSubscribersWithFilter().size());
     }
 
     @Test
@@ -102,7 +102,7 @@ class MultiThreadedEventBusTest {
             executorService.execute(() -> {
                 try {
                     for (int j = 0; j < iterationsPerThread; j++) {
-                        eventBus.addSubscriber(TestEvent.class, new SubscriberImpl(String.valueOf(finalI +j)));
+                        eventBus.addSubscriber(TestEvent.class, new SubscriberImpl(String.valueOf(finalI + j)));
                         eventBus.publishEvent(new TestEvent());
                     }
                 } finally {
@@ -117,6 +117,7 @@ class MultiThreadedEventBusTest {
         // Then
         assertEquals(threadCount * iterationsPerThread, eventBus.getSubscribersWithoutFilter().get(TestEvent.class).size());
     }
+
     static class TestEvent {
     }
 }
